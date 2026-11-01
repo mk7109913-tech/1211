@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f5eee8">
+<title>Татьяна и Владимир — свадебное приглашение</title>
+<style>
+:root {
+  --site-primary: #c9b5a5;
+  --site-on-primary: #fffdfb;
+  --site-secondary: #e8dcd2;
+  --site-on-secondary: #594b43;
+  --site-background: #f5eee8;
+  --site-on-background: #695b53;
+  --site-font-body: Georgia, 'Times New Roman', serif;
+  --site-font-heading: 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); }
+#app { min-height: 100vh; width: 100%; border-radius: 0; overflow: hidden; position: relative; background-color: light-dark(var(--site-background), #282421); color: light-dark(var(--site-on-background), #eee4dc); }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.snow { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 10; opacity: var(--site-decoration-opacity); }
+.flake { position: absolute; top: -12px; color: #fff; text-shadow: 0 0 7px #d7c8bc; animation: fall linear infinite; }
+@keyframes fall { to { transform: translate3d(35px, 110vh, 0) rotate(300deg); } }
+.intro { min-height: 100svh; display: grid; place-items: center; padding: 28px 18px; position: relative; background: radial-gradient(ellipse at 50% 35%, #fffdfb 0%, #f5eee8 58%, #e7d9cf 100%); }
+.paper { width: min(100%, 440px); min-height: 590px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 34px 24px; border: 1px solid rgba(176,151,133,.35); box-shadow: 0 22px 65px rgba(92,67,51,.15), inset 0 0 35px rgba(255,255,255,.8); background: linear-gradient(135deg,rgba(255,255,255,.78),rgba(246,237,229,.9)), repeating-linear-gradient(45deg,transparent 0 5px,rgba(180,156,139,.035) 6px 7px); }
+.paper:before { content: '❧'; position: absolute; top: 15px; color: #cbb8a8; font-size: 25px; opacity: .8; }
+.pearls { position: absolute; top: 0; left: 50%; width: 2px; height: 195px; transform: translateX(-50%); background: repeating-linear-gradient(to bottom,#d8c6b8 0 2px,transparent 2px 9px); opacity: .8; }
+.pearls:before,.pearls:after { content: ''; position: absolute; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 30% 25%,#fff,#e8d8cc 65%,#bda695); left: -4px; box-shadow: 0 0 5px #d9c6b8; }
+.pearls:after { top: 28px; }
+.envelope { width: min(100%, 350px); height: 340px; position: relative; margin-top: 90px; background: linear-gradient(145deg,#eadbd0,#f8f0e9 52%,#e4d2c5); box-shadow: 0 18px 35px rgba(93,68,53,.17); border: 1px solid rgba(174,148,128,.38); overflow: hidden; }
+.envelope:before { content:''; position:absolute; inset:0; background: linear-gradient(32deg,transparent 49.7%,rgba(183,155,135,.38) 50%,transparent 50.5%),linear-gradient(-32deg,transparent 49.7%,rgba(183,155,135,.35) 50%,transparent 50.5%); }
+.flap { position:absolute; inset:0 0 auto; height:65%; background: linear-gradient(145deg,#f8f0e9,#e7d7cb); clip-path: polygon(0 0,100% 0,50% 100%); transform-origin: top; transition: transform 1.25s cubic-bezier(.2,.7,.2,1); z-index:2; filter: drop-shadow(0 5px 5px rgba(105,79,62,.12)); }
+.seal { position:absolute; left:50%; top:48%; transform:translate(-50%,-50%); width:88px; height:88px; border-radius:50%; display:grid; place-items:center; z-index:4; color:#8d7462; font-size:35px; background: radial-gradient(circle at 35% 25%,#fff9f2,#d8c3b3 70%,#b49a86); border:5px double #c4aa96; box-shadow:0 5px 12px rgba(86,62,47,.25); transition:opacity .5s, transform .6s; }
+.envelope-caption { position:absolute; z-index:3; left:0; right:0; bottom:27px; text-align:center; color:#8d7868; font-size:11px; letter-spacing:.22em; text-transform:uppercase; }
+.open-btn { margin-top:26px; padding:13px 28px; border:1px solid #bca493; border-radius:2px; background:rgba(255,252,248,.7); color:#806b5d; letter-spacing:.14em; text-transform:uppercase; font-size:11px; transition:.25s; }
+.open-btn:hover { background:#d9c7b9; color:#fff; }
+.opened .flap { transform:rotateX(180deg); }
+.opened .seal { opacity:0; transform:translate(-50%,-50%) scale(.3); }
+.opened .envelope { animation: lift .9s .4s both; }
+@keyframes lift { to { transform:translateY(-30px); opacity:0; } }
+.hint { margin-top:17px; color:#a08b7b; font-size:12px; letter-spacing:.06em; }
+.invite { display:none; background:linear-gradient(180deg,#fbf8f4,#f1e7df); color:#69584d; }
+.invite.show { display:block; animation: reveal 1s both; }
+@keyframes reveal { from {opacity:0; transform:translateY(25px)} to {opacity:1; transform:none} }
+.section { width:min(100%,680px); margin:auto; padding:76px 25px; text-align:center; position:relative; }
+.kicker { text-transform:uppercase; letter-spacing:.3em; font-size:10px; color:#aa9381; }
+h1,h2,h3 { font-family:var(--site-font-heading); font-weight:400; }
+h1 { font-size:clamp(42px,10vw,68px); line-height:1.08; margin:25px 0 10px; color:#8a7261; }
+.amp { display:block; font-size:28px; font-style:italic; color:#b99f8d; margin:8px 0; }
+.date { font-size:18px; letter-spacing:.23em; color:#947b69; margin:27px 0 8px; }
+.rule { width:76px; height:1px; background:#cbb7a7; margin:28px auto; }
+.lead { font-size:17px; line-height:1.85; max-width:490px; margin:0 auto; }
+.section h2 { font-size:clamp(27px,6vw,38px); color:#8a7261; margin:0 0 25px; }
+.details { display:grid; grid-template-columns:1fr; gap:18px; }
+.detail { padding:26px 18px; border:1px solid #dfcfc2; background:rgba(255,255,255,.45); box-shadow:0 8px 24px rgba(116,88,68,.05); }
+.detail .time { font-size:28px; color:#9b806c; margin:9px 0; }
+.detail .place { font-size:17px; line-height:1.7; }
+.detail a { display:inline-block; margin-top:13px; color:#9b806c; font-size:12px; letter-spacing:.1em; text-decoration:none; border-bottom:1px solid #cbb7a7; padding-bottom:4px; }
+.timeline { max-width:420px; margin:auto; text-align:left; border-left:1px solid #cbb7a7; padding-left:27px; }
+.event { position:relative; padding:0 0 30px; }
+.event:before { content:''; position:absolute; left:-33px; top:6px; width:11px; height:11px; border-radius:50%; background:#c5aa96; border:3px solid #f5ebe3; }
+.event strong { font-size:21px; color:#947b69; font-weight:400; }
+.event p { margin:6px 0 0; line-height:1.6; }
+.dress-note { line-height:1.8; font-size:16px; }
+.swatches { display:flex; justify-content:center; gap:12px; margin:25px 0; flex-wrap:wrap; }
+.swatch { width:43px; height:43px; border-radius:50%; border:3px solid rgba(255,255,255,.8); box-shadow:0 2px 8px #c8b7aa; }
+.rsvp { background:rgba(255,255,255,.42); border:1px solid #dfcfc2; padding:28px 20px; text-align:left; }
+.rsvp label { display:block; font-size:13px; margin:15px 0 7px; color:#907968; }
+.rsvp input,.rsvp select { width:100%; padding:12px; border:1px solid #d9c8bb; background:#fffaf6; color:#69584d; border-radius:0; }
+.rsvp button { width:100%; margin-top:20px; padding:14px; border:0; background:#b69d8a; color:white; letter-spacing:.12em; text-transform:uppercase; font-size:11px; }
+#thanks { display:none; text-align:center; padding:14px; color:#8a7261; }
+.footer { padding:50px 20px 70px; text-align:center; color:#a58e7d; font-style:italic; font-size:22px; }
+@media(min-width:600px) { .details { grid-template-columns:1fr 1fr; } .section { padding-top:95px; padding-bottom:95px; } }
+@media(prefers-reduced-motion:reduce) { *,*:before,*:after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="snow" id="snow" aria-hidden="true"></div>
+  <section class="intro" id="intro">
+    <div class="paper">
+      <div class="pearls"></div>
+      <div class="envelope" id="envelope" aria-label="Закрытое свадебное письмо">
+        <div class="flap"></div>
+        <div class="seal">❦</div>
+        <div class="envelope-caption">Приглашение на свадьбу</div>
+      </div>
+      <button class="open-btn" id="openBtn" type="button">Открыть приглашение</button>
+      <div class="hint">Для вас — с любовью</div>
+    </div>
+  </section>
+  <main class="invite" id="invite">
+    <section class="section">
+      <div class="kicker">Приглашаем разделить с нами счастье</div>
+      <h1>Татьяна <span class="amp">и</span> Владимир</h1>
+      <div class="rule"></div>
+      <p class="lead">Дорогие родные и друзья!<br>В нашей жизни начинается новая глава, и мы хотим открыть её вместе с вами. Будем счастливы разделить этот особенный день и рождение нашей семьи в кругу самых близких.</p>
+      <div class="rule"></div>
+      <div class="kicker">С любовью ждём вас</div>
+    </section>
+    <section class="section">
+      <div class="kicker">Сохраните эту дату</div>
+      <h2>15 января 2027 года</h2>
+      <div class="date">15 · 01 · 2027</div>
+      <div class="rule"></div>
+      <p class="lead">День, когда начнётся наша семейная история.</p>
+    </section>
+    <section class="section">
+      <div class="kicker">Будем счастливы видеть вас</div>
+      <h2>Церемония</h2>
+      <div class="detail">
+        <div class="time">14:30</div>
+        <div class="place">15 января 2027<br>ул. Кирова, 26</div>
+        <a href="https://www.google.com/maps/search/?api=1&query=ул.+Кирова+26" target="_blank" rel="noopener">Открыть адрес ↗</a>
+      </div>
+    </section>
+    <section class="section">
+      <div class="kicker">Продолжим праздновать вместе</div>
+      <h2>Свадебный банкет</h2>
+      <div class="detail">
+        <div class="time">17:00</div>
+        <div class="place">Кафе «Легенда»<br>ул. Горького, 5</div>
+        <a href="https://www.google.com/maps/search/?api=1&query=кафе+Легенда+ул.+Горького+5" target="_blank" rel="noopener">Открыть адрес ↗</a>
+      </div>
+    </section>
+    <div class="footer">С любовью, Татьяна и Владимир <div style="font-size:17px;margin-top:12px">15 января 2027</div></div>
+  </main>
+</div>
+<script>
+const snow = document.getElementById('snow');
+for (let i = 0; i < 34; i++) {
+  const f = document.createElement('span');
+  f.className = 'flake';
+  f.textContent = i % 3 === 0 ? '✧' : '•';
+  f.style.left = Math.random() * 100 + '%';
+  f.style.opacity = (0.25 + Math.random() * 0.65).toFixed(2);
+  f.style.fontSize = (5 + Math.random() * 9) + 'px';
+  f.style.animationDuration = (9 + Math.random() * 14) + 's';
+  f.style.animationDelay = (-Math.random() * 20) + 's';
+  snow.appendChild(f);
+}
+document.getElementById('openBtn').addEventListener('click', () => {
+  document.getElementById('intro').classList.add('opened');
+  setTimeout(() => {
+    document.getElementById('intro').style.display = 'none';
+    const invite = document.getElementById('invite');
+    invite.classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }, 1050);
+});
+</script>
+</body>
+</html>
